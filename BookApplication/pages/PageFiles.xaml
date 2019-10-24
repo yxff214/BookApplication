@@ -1,0 +1,47 @@
+﻿<Page x:Class="BookApplication.PageFiles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookApplication"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageFiles">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBox x:Name="mTBSearch" Width="200" HorizontalAlignment="Left"/>
+            <Button Content="搜索下一个" Click="Button_Click" Tag="search"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" x:Name="mDGMain" AutoGenerateColumns="False" CanUserReorderColumns="False" AlternatingRowBackground="#FFEEEEEE" CanUserResizeRows="False" SelectionUnit="CellOrRowHeader" HorizontalGridLinesBrush="#FFB8B8B8" VerticalGridLinesBrush="#FFB8B8B8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="server_mtime" Binding="{Binding Path=PanFile.server_mtime}"/>
+                <DataGridTextColumn Header="category" Binding="{Binding Path=PanFile.category}"/>
+                <DataGridTextColumn Header="unlist" Binding="{Binding Path=PanFile.unlist}"/>
+                <DataGridTextColumn Header="fs_id" Binding="{Binding Path=PanFile.fs_id}"/>
+                <DataGridTextColumn Header="size" Binding="{Binding Path=PanFile.size}"/>
+                <DataGridTextColumn Header="isdir" Binding="{Binding Path=PanFile.isdir}"/>
+                <DataGridTextColumn Header="iper_id" Binding="{Binding Path=PanFile.iper_id}"/>
+                <DataGridTextColumn Header="server_ctime" Binding="{Binding Path=PanFile.server_ctime}"/>
+                <DataGridTextColumn Header="lodocpreview" Binding="{Binding Path=PanFile.lodocpreview}" Width="200"/>
+                <DataGridTextColumn Header="local_mtime" Binding="{Binding Path=PanFile.local_mtime}"/>
+                <DataGridTextColumn Header="md5" Binding="{Binding Path=PanFile.md5}"/>
+                <DataGridTextColumn Header="docpreview" Binding="{Binding Path=PanFile.docpreview}" Width="200"/>
+                <DataGridTextColumn Header="share" Binding="{Binding Path=PanFile.share}"/>
+                <DataGridTextColumn Header="path" Binding="{Binding Path=PanFile.path}"/>
+                <DataGridTextColumn Header="local_ctime" Binding="{Binding Path=PanFile.local_ctime}"/>
+                <DataGridTextColumn Header="server_filename" Binding="{Binding Path=PanFile.server_filename}"/>
+                <DataGridTextColumn Header="empty" Binding="{Binding Path=PanFile.empty}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="分享" Click="MenuItem_Click" Tag="shear"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+    </Grid>
+</Page>
