@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,23 +66,32 @@ namespace BookApplication
             switch (((Control)sender).Tag)
             {
                 case "rescan":// 重新扫描
-                    _rescan();
+                    _scan();
                     break;
                 default:break;
             }
         }
+
+        private void _scan()
+        {
+            bool b = PromptDialog.ShowPrompt("重新扫描文件目录", "确定重新扫描文件目录吗？点击确定继续！");
+            if (!b) return;
+            new Thread(_rescan).Start();
+        }
+
         /// <summary>
         /// 重新扫描
         /// </summary>
         private void _rescan()
         {
-            bool b = PromptDialog.ShowPrompt("重新扫描文件目录", "确定重新扫描文件目录吗？点击确定继续！");
-            if (!b) return;
+            Dispatcher.Invoke(() => (Application.Current.MainWindow as MainWindow)?.StatusBarState(true, "正在扫描..."));
             Account a = _getSelectedAccount();
             if (a == null) return;
 
             NnPanManager npm = new NnPanManager(a);
             string str = npm.ScanFile();
+            Dispatcher.Invoke(() => (Application.Current.MainWindow as MainWindow)?.StatusBarState());
+            NnMessage.ShowMessage("扫描结束");
         }
 
         /// <summary>

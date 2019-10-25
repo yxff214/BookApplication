@@ -23,7 +23,6 @@ namespace BookApplication
             m_cookie.Add(new Uri("https://pan.baidu.com"), new Cookie("STOKEN", a.STOKEN));
 
         }
-        // TODO 重新扫描时删除该账号的所有文件
         public string ScanFile(int page = 1, int num = 500, string dir = "%2F")
         {
             List<NnPanFile> list = new List<NnPanFile>();// 文件夹
