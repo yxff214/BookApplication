@@ -89,6 +89,9 @@ namespace BookApplication
             if (a == null) return;
 
             NnPanManager npm = new NnPanManager(a);
+
+            // 清空选择的账号的文件
+            int count = NnReader.Instance.DeleteFIles(a);
             string str = npm.ScanFile();
             Dispatcher.Invoke(() => (Application.Current.MainWindow as MainWindow)?.StatusBarState());
             NnMessage.ShowMessage("扫描结束");

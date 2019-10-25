@@ -129,7 +129,7 @@ namespace BookApplication
 
         private object[] _getFileObjects(NnPanFile v, Account account)
         {
-            return new object[] { v.server_ctime, v.category, v.category, v.fs_id.ToString(), v.size, v.isdir, v.iper_id, v.server_ctime, v.thumbs==null?"":v.thumbs.url1+";"+v.thumbs.url2+";"+v.thumbs.url3, v.lodocpreview??"", v.local_mtime, v.md5??"", v.docpreview??"", v.share, v.path??"", v.local_ctime, v.server_filename??"", v.empty, account.Id };
+            return new object[] { v.server_ctime, v.category, v.category, v.fs_id.ToString(), v.size.ToString(), v.isdir, v.iper_id, v.server_ctime, v.thumbs==null?"":v.thumbs.url1+";"+v.thumbs.url2+";"+v.thumbs.url3, v.lodocpreview??"", v.local_mtime, v.md5??"", v.docpreview??"", v.share, v.path??"", v.local_ctime, v.server_filename??"", v.empty, account.Id };
         }
 
         /// <summary>

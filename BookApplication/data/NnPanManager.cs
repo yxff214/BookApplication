@@ -30,18 +30,19 @@ namespace BookApplication
             {
                 string url = $"https://pan.baidu.com/api/list?order=time&desc=1&showempty=0&web=1&page={page}&num={num}&dir={dir}&t=0.9934258251250032&channel=chunlei&web=1&app_id=250528&bdstoken={m_account.BDStoken}&logid={m_account.LogId}&clienttype=0&startLogTime=1571497395535";
                 NnPanInfos info = _getPanInfos(url);
-                foreach (var v in info.list)// 处理文件夹
+                if (info == null) continue;
+                if (info.list != null)
                 {
-                    if (v.isdir == 1)
+                    foreach (var v in info.list)// 处理文件夹
                     {
-                        list.Add(v);
+                        if (v.isdir == 1)
+                        {
+                            list.Add(v);
+                        }
                     }
                 }
-                // 清空选择的账号的文件
-                int count = NnReader.Instance.DeleteFIles(m_account);
-                if (count <= 0) return "数据库删除文件错误";
                 // 将数据写入数据库
-                count = NnReader.Instance.InsertFiles(info,m_account);
+                int count = NnReader.Instance.InsertFiles(info, m_account);
                 if (info.errno != 0)
                 {
                     return info.errno.ToString();
@@ -53,7 +54,7 @@ namespace BookApplication
                 ++page;
             }
             // 处理文件夹
-            foreach(var v in list)
+            foreach (var v in list)
             {
                 if (v.empty > 0) continue;
                 string s = v.path;
@@ -134,7 +135,7 @@ namespace BookApplication
         public int category { get; set; }
         public int unlist { get; set; }
         public long fs_id { get; set; }
-        public int size { get; set; }
+        public long size { get; set; }
         public int isdir { get; set; }
         public int iper_id { get; set; }
         public int server_ctime { get; set; }
@@ -181,7 +182,9 @@ namespace BookApplication
             string s = NnReader.GetStringFromDb(reader, "fs_id");
             long.TryParse(s, out long l);
             PanFile.fs_id = l;
-            PanFile.size = NnReader.GetIntFromDb(reader, "size");
+            s = NnReader.GetStringFromDb(reader, "size");
+            long.TryParse(s, out l);
+            PanFile.size = l;
             PanFile.isdir = NnReader.GetIntFromDb(reader, "isdir");
             PanFile.iper_id = NnReader.GetIntFromDb(reader, "iper_id");
             PanFile.server_ctime = NnReader.GetIntFromDb(reader, "server_ctime");
